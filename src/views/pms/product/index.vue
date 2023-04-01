@@ -87,18 +87,18 @@
         <el-table-column label="编号" width="100" align="center">
           <template slot-scope="scope">{{scope.row.id}}</template>
         </el-table-column>
-        <el-table-column label="商品图片" width="120" align="center">
+        <el-table-column label="家具图片" width="120" align="center">
           <template slot-scope="scope"><img style="height: 80px" :src="scope.row.pic"></template>
         </el-table-column>
-        <el-table-column label="商品名称" align="center">
+        <el-table-column label="家具名称" align="center">
           <template slot-scope="scope">
             <p>{{scope.row.name}}</p>
             <p>品牌：{{scope.row.brandName}}</p>
           </template>
         </el-table-column>
-        <el-table-column label="价格/货号" width="120" align="center">
+        <el-table-column label="租金/货号" width="120" align="center">
           <template slot-scope="scope">
-            <p>价格：￥{{scope.row.price}}</p>
+            <p>价格：￥{{scope.row.price}}/月</p>
             <p>货号：{{scope.row.productSn}}</p>
           </template>
         </el-table-column>

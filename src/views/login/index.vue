@@ -1,24 +1,24 @@
 <template>
-  <div>
+  <div class="login-container" :style="{ 'background-image': `url(${backgroundImage})` }">
     <el-card class="login-form-layout">
       <el-form autoComplete="on"
                :model="loginForm"
                :rules="loginRules"
                ref="loginForm"
                label-position="left">
-        <div style="text-align: center">
-          <svg-icon icon-class="login-mall" style="width: 56px;height: 56px;color: #409EFF"></svg-icon>
+        <div class="logo-container">
+          <svg-icon icon-class="login-mall" class="logo-icon"></svg-icon>
         </div>
-        <h2 class="login-title color-main">mall-admin-web</h2>
+        <h2 class="login-title color-main">家具租赁管理系统</h2>
         <el-form-item prop="username">
           <el-input name="username"
                     type="text"
                     v-model="loginForm.username"
                     autoComplete="on"
                     placeholder="请输入用户名">
-          <span slot="prefix">
-            <svg-icon icon-class="user" class="color-main"></svg-icon>
-          </span>
+            <span slot="prefix">
+              <svg-icon icon-class="user" class="color-main input-icon"></svg-icon>
+            </span>
           </el-input>
         </el-form-item>
         <el-form-item prop="password">
@@ -28,47 +28,92 @@
                     v-model="loginForm.password"
                     autoComplete="on"
                     placeholder="请输入密码">
-          <span slot="prefix">
-            <svg-icon icon-class="password" class="color-main"></svg-icon>
-          </span>
+            <span slot="prefix">
+              <svg-icon icon-class="password" class="color-main input-icon"></svg-icon>
+            </span>
             <span slot="suffix" @click="showPwd">
-            <svg-icon icon-class="eye" class="color-main"></svg-icon>
-          </span>
+              <svg-icon icon-class="eye" class="color-main input-icon"></svg-icon>
+            </span>
           </el-input>
         </el-form-item>
-        <el-form-item style="margin-bottom: 60px;text-align: center">
-          <el-button style="width: 45%" type="primary" :loading="loading" @click.native.prevent="handleLogin">
+        <el-form-item class="login-button-container">
+          <el-button class="login-button" type="primary" :loading="loading" @click.native.prevent="handleLogin">
             登录
-          </el-button>
-          <el-button style="width: 45%" type="primary" @click.native.prevent="handleTry">
-            获取体验账号
           </el-button>
         </el-form-item>
       </el-form>
     </el-card>
     <img :src="login_center_bg" class="login-center-layout">
-    <el-dialog
-      title="公众号二维码"
-      :visible.sync="dialogVisible"
-      :show-close="false"
-      :center="true"
-      width="30%">
-      <div style="text-align: center">
-        <span class="font-title-large"><span class="color-main font-extra-large">关注公众号</span>回复<span class="color-main font-extra-large">体验</span>获取体验账号</span>
-        <br>
-        <img src="http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/banner/qrcode_for_macrozheng_258.jpg" width="160" height="160" style="margin-top: 10px">
-      </div>
-      <span slot="footer" class="dialog-footer">
-    <el-button type="primary" @click="dialogConfirm">确定</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
+
+<style scoped>
+.login-container {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 50vh;
+}
+
+.login-form-layout {
+  width: 400px;
+  padding: 40px 30px;
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 140px auto;
+  border-top: 10px solid #fcfcfc; /* Update border color to grey */
+}
+
+.logo-container {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.logo-icon {
+  width: 56px;
+  height: 56px;
+  color: #ccc; /* Update icon color to grey */
+}
+
+.login-title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #ccc; /* Update title color to grey */
+}
+
+.input-icon {
+  font-size: 16px;
+  color: #ccc; /* Update input icon color to grey */
+}
+
+.login-button-container {
+  margin-bottom: 60px;
+  text-align: center;
+}
+
+.login-button {
+  width: 100%;
+  background-color: #febd22; /* Update button background color to grey */
+  border-color: #ccc; /* Update button border color to grey */
+}
+
+.login-center-layout {
+  background: #409EFF;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  margin-top: 200px;
+}
+</style>
 
 <script>
   import {isvalidUsername} from '@/utils/validate';
   import {setSupport,getSupport,setCookie,getCookie} from '@/utils/support';
   import login_center_bg from '@/assets/images/login_center_bg.png'
+  import background from '@/assets/images/background.jpeg';
 
   export default {
     name: 'login',
@@ -98,8 +143,8 @@
         },
         loading: false,
         pwdType: 'password',
-        login_center_bg,
         dialogVisible:false,
+        backgroundImage: background,
         supportDialogVisible:false
       }
     },
@@ -158,27 +203,3 @@
     }
   }
 </script>
-
-<style scoped>
-  .login-form-layout {
-    position: absolute;
-    left: 0;
-    right: 0;
-    width: 360px;
-    margin: 140px auto;
-    border-top: 10px solid #409EFF;
-  }
-
-  .login-title {
-    text-align: center;
-  }
-
-  .login-center-layout {
-    background: #409EFF;
-    width: auto;
-    height: auto;
-    max-width: 100%;
-    max-height: 100%;
-    margin-top: 200px;
-  }
-</style>

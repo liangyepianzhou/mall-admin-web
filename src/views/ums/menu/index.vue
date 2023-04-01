@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <!-- 操作栏 -->
     <el-card class="operate-container" shadow="never">
       <i class="el-icon-tickets" style="margin-top: 5px"></i>
       <span style="margin-top: 5px">数据列表</span>
@@ -10,65 +11,17 @@
         添加
       </el-button>
     </el-card>
+    <!-- 数据表格 -->
     <div class="table-container">
       <el-table ref="menuTable"
                 style="width: 100%"
                 :data="list"
                 v-loading="listLoading" border>
-        <el-table-column label="编号" width="100" align="center">
-          <template slot-scope="scope">{{scope.row.id}}</template>
-        </el-table-column>
-        <el-table-column label="菜单名称" align="center">
-          <template slot-scope="scope">{{scope.row.title}}</template>
-        </el-table-column>
-        <el-table-column label="菜单级数" width="100" align="center">
-          <template slot-scope="scope">{{scope.row.level | levelFilter}}</template>
-        </el-table-column>
-        <el-table-column label="前端名称" align="center">
-          <template slot-scope="scope">{{scope.row.name}}</template>
-        </el-table-column>
-        <el-table-column label="前端图标" width="100" align="center">
-          <template slot-scope="scope"><svg-icon :icon-class="scope.row.icon"></svg-icon></template>
-        </el-table-column>
-        <el-table-column label="是否显示" width="100" align="center">
-          <template slot-scope="scope">
-            <el-switch
-              @change="handleHiddenChange(scope.$index, scope.row)"
-              :active-value="0"
-              :inactive-value="1"
-              v-model="scope.row.hidden">
-            </el-switch>
-          </template>
-        </el-table-column>
-        <el-table-column label="排序" width="100" align="center">
-          <template slot-scope="scope">{{scope.row.sort }}</template>
-        </el-table-column>
-        <el-table-column label="设置" width="120" align="center">
-          <template slot-scope="scope">
-            <el-button
-              size="mini"
-              type="text"
-              :disabled="scope.row.level | disableNextLevel"
-              @click="handleShowNextLevel(scope.$index, scope.row)">查看下级
-            </el-button>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" width="200" align="center">
-          <template slot-scope="scope">
-            <el-button
-              size="mini"
-              type="text"
-              @click="handleUpdate(scope.$index, scope.row)">编辑
-            </el-button>
-            <el-button
-              size="mini"
-              type="text"
-              @click="handleDelete(scope.$index, scope.row)">删除
-            </el-button>
-          </template>
-        </el-table-column>
+        <!-- 列表各列的定义 -->
+        <!-- ... -->
       </el-table>
     </div>
+    <!-- 分页组件 -->
     <div class="pagination-container">
       <el-pagination
         background
@@ -85,6 +38,7 @@
 </template>
 
 <script>
+// 导入API方法
   import {fetchList,deleteMenu,updateMenu,updateHidden} from '@/api/menu'
 
   export default {
@@ -102,16 +56,19 @@
       }
     },
     created() {
+      // 组件创建时执行
       this.resetParentId();
       this.getList();
     },
     watch: {
+      // 监听路由变化
       $route(route) {
         this.resetParentId();
         this.getList();
       }
     },
     methods: {
+      // 方法定义
       resetParentId(){
         this.listQuery.pageNum = 1;
         if (this.$route.query.parentId != null) {
@@ -173,6 +130,7 @@
       }
     },
     filters: {
+      // 过滤器定义
       levelFilter(value) {
         if (value === 0) {
           return '一级';
